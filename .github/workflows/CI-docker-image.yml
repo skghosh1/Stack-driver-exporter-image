@@ -23,7 +23,7 @@ jobs:
       - name: Build Docker image
         run: |
           COMMIT_SHA=${{ github.sha }}
-          docker build -f docker/Dockerfile -t stackdriver_exporter:${COMMIT_SHA} .
+          docker build -t stackdriver_exporter:${COMMIT_SHA} .
 
       - name: Save the Docker image to the workspace
         run: |
