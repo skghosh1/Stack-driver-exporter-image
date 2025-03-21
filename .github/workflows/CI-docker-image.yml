@@ -3,15 +3,11 @@ name: Build and Push Docker Image
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
+      tags:
+        description: 'Tag for the Docker image'
         required: true
-        default: 'warning'
+        default: '${{ github.sha }}'
         type: string
-        options:
-          - info
-          - warning
-          - debug
 
 jobs:
   build:
@@ -27,7 +23,7 @@ jobs:
       - name: Build Docker image
         run: |
           COMMIT_SHA=${{ github.sha }}
-          docker build -t stackdriver_exporter:${COMMIT_SHA} .
+          docker build -f docker/Dockerfile -t stackdriver_exporter:${COMMIT_SHA} .
 
       - name: Save the Docker image to the workspace
         run: |
