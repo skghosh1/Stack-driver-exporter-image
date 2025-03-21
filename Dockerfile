@@ -7,9 +7,6 @@ WORKDIR /app
 # Clone the Stackdriver Exporter repository
 RUN git clone https://github.com/prometheus-community/stackdriver_exporter.git .
 
-# Change to the stackdriver_exporter directory
-WORKDIR /app/stackdriver_exporter
-
 # Download Go modules
 RUN go mod download
 
