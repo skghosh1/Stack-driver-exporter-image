@@ -30,7 +30,7 @@ jobs:
           docker save stackdriver_exporter:${COMMIT_SHA} | gzip > stackdriver_exporter_${COMMIT_SHA}.tar.gz
 
       - name: Upload image artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: stackdriver_exporter_image
           path: stackdriver_exporter_${{ github.sha }}.tar.gz
