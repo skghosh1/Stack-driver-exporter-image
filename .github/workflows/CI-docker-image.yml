@@ -69,3 +69,25 @@ jobs:
         run: |
           COMMIT_SHA=${{ github.sha }}
           echo "Docker image pushed with tag: $COMMIT_SHA"
+  scan:
+    runs-on: ubuntu-latest
+    needs: push
+
+    steps:
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.34.0_Linux-64bit.deb
+          sudo dpkg -i trivy_0.34.0_Linux-64bit.deb
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Scan Docker Image with Trivy
+        run: |
+          COMMIT_SHA=${{ github.sha }}
+          trivy image ${{ secrets.DOCKERHUB_USERNAME }}/stackdriver_exporter:${COMMIT_SHA}          
