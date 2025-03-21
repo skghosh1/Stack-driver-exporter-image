@@ -13,9 +13,6 @@ WORKDIR /app/stackdriver_exporter
 # Download Go modules
 RUN go mod download
 
-# Copy the rest of the application source code
-COPY . .
-
 # Build the Stackdriver Exporter binary
 RUN go build -o stackdriver_exporter .
 
