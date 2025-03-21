@@ -83,7 +83,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install trivy
 
-- name: Log in to Docker Hub
+      - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -93,4 +93,7 @@ jobs:
         run: |
           COMMIT_SHA=${{ github.sha }}
           trivy image ${{ secrets.DOCKERHUB_USERNAME }}/stackdriver_exporter:${COMMIT_SHA}
-
+      - name: Scan Docker Image with Trivy
+        run: |
+          COMMIT_SHA=${{ github.sha }}
+          trivy image ${{ secrets.DOCKERHUB_USERNAME }}/stackdriver_exporter:${COMMIT_SHA}
