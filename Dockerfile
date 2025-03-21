@@ -1,5 +1,5 @@
-# Use the official Golang image to build the binary
-FROM golang:1.18-alpine AS builder
+# Use the official Golang image (1.19 or later) to build the binary
+FROM golang:1.19-alpine AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -9,6 +9,9 @@ RUN apk add --no-cache git
 
 # Clone the Stackdriver Exporter repository
 RUN git clone https://github.com/prometheus-community/stackdriver_exporter.git .
+
+# Ensure Go modules are downloaded
+RUN go mod tidy
 
 # Build the Stackdriver Exporter binary
 RUN go build -o stackdriver_exporter .
