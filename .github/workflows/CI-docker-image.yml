@@ -74,14 +74,16 @@ jobs:
     needs: push
 
     steps:
-      - name: Install Trivy
+      - name: Install Trivy (latest)
         run: |
           sudo apt-get update
           sudo apt-get install -y wget
-          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.34.0_Linux-64bit.deb
-          sudo dpkg -i trivy_0.34.0_Linux-64bit.deb
+          wget https://aquasecurity.github.io/trivy-repo/deb/public.key -O - | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb/ $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy
 
-      - name: Log in to Docker Hub
+- name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -90,4 +92,5 @@ jobs:
       - name: Scan Docker Image with Trivy
         run: |
           COMMIT_SHA=${{ github.sha }}
-          trivy image ${{ secrets.DOCKERHUB_USERNAME }}/stackdriver_exporter:${COMMIT_SHA}          
+          trivy image ${{ secrets.DOCKERHUB_USERNAME }}/stackdriver_exporter:${COMMIT_SHA}
+
