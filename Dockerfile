@@ -13,9 +13,6 @@ RUN git clone https://github.com/prometheus-community/stackdriver_exporter.git .
 # Change to the stackdriver_exporter directory
 WORKDIR /app/stackdriver_exporter
 
-# Copy the Go modules files
-COPY go.mod go.sum ./
-
 # Download Go modules
 RUN go mod download
 
