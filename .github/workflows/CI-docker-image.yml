@@ -6,7 +6,6 @@ on:
       tags:
         description: 'Tag for the Docker image'
         required: true
-        default: '${{ github.sha }}'
         type: string
 
 jobs:
