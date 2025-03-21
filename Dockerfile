@@ -4,9 +4,6 @@ FROM golang:1.23 as builder
 # Set the working directory inside the container
 WORKDIR /app
 
-# Install git and necessary packages for Go modules
-RUN apk add --no-cache git
-
 # Clone the Stackdriver Exporter repository
 RUN git clone https://github.com/prometheus-community/stackdriver_exporter.git .
 
