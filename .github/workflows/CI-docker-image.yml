@@ -93,7 +93,3 @@ jobs:
         run: |
           COMMIT_SHA=${{ github.sha }}
           trivy image ${{ secrets.DOCKERHUB_USERNAME }}/stackdriver_exporter:${COMMIT_SHA}
-      - name: Scan Docker Image with Trivy
-        run: |
-          COMMIT_SHA=${{ github.sha }}
-          trivy image ${{ secrets.DOCKERHUB_USERNAME }}/stackdriver_exporter:${COMMIT_SHA}
